@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - Fathir Sthore Digital Office</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4a574;
+            --accent-hover: #c49464;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --text-muted: #999;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+            --border: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ffffff;
+            --text: #ffffff;
+            --text-light: #b0b0b0;
+            --text-muted: #808080;
+            --bg: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .payment-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .payment-card {
+            background: var(--bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .payment-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .payment-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .payment-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .payment-body {
+            padding: 2rem;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .qr-image {
+            width: 250px;
+            height: 250px;
+            background: white;
+            border-radius: var(--radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .payment-details {
+            margin-bottom: 2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .detail-value {
+            font-weight: 600;
+        }
+
+        .detail-value.amount {
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        .countdown-box {
+            background: rgba(245,158,11,0.1);
+            border: 1px solid rgba(245,158,11,0.2);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .countdown-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning);
+            font-family: monospace;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .status-box.pending {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+
+        .status-box.success {
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+        }
+
+        .status-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Provider Selection */
+        .provider-section {
+            margin-bottom: 2rem;
+        }
+
+        .provider-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .provider-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .provider-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .provider-option:hover,
+        .provider-option.active {
+            border-color: var(--accent);
+            background: rgba(212,165,116,0.05);
+        }
+
+        .provider-option.active {
+            background: rgba(212,165,116,0.1);
+        }
+
+        .provider-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .provider-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Loading State */
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(239,68,68,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--danger);
+            margin: 0 auto 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .payment-header {
+                padding: 1.5rem;
+            }
+
+            .payment-body {
+                padding: 1.5rem;
+            }
+
+            .qr-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .provider-options {
+                flex-direction: column;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <!-- Loading State -->
+        <div id="loadingState" class="payment-card loading-state">
+            <div class="loading-spinner"></div>
+            <p>Memuat halaman pembayaran...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="payment-card error-state" style="display: none;">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Transaksi Tidak Ditemukan</h3>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Sesi pembayaran telah berakhir</p>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                Kembali ke Beranda
+            </a>
+        </div>
+
+        <!-- Payment Card -->
+        <div id="paymentCard" class="payment-card" style="display: none;">
+            <div class="payment-header">
+                <div class="payment-logo">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h1 class="payment-title">Pembayaran QRIS</h1>
+                <p class="payment-subtitle">Fathir Sthore Digital Office</p>
+            </div>
+
+            <div class="payment-body">
+                <!-- Provider Selection -->
+                <div class="provider-section">
+                    <p class="provider-title">Pilih Provider QRIS:</p>
+                    <div class="provider-options">
+                        <div class="provider-option active" data-provider="atlantik" onclick="selectProvider('atlantik')">
+                            <div class="provider-name">QRIS A</div>
+                            <div class="provider-desc">Atlantik</div>
+                        </div>
+                        <div class="provider-option" data-provider="pakasir" onclick="selectProvider('pakasir')">
+                            <div class="provider-name">QRIS B</div>
+                            <div class="provider-desc">Pakasir</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-container">
+                    <img id="qrImage" class="qr-image" src="" alt="QRIS Code">
+                </div>
+
+                <!-- Payment Details -->
+                <div class="payment-details">
+                    <div class="detail-row">
+                        <span class="detail-label">ID Transaksi</span>
+                        <span class="detail-value" id="trxId">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Total Pembayaran</span>
+                        <span class="detail-value amount" id="trxAmount">Rp 0</span>
+                    </div>
+                </div>
+
+                <!-- Countdown -->
+                <div class="countdown-box">
+                    <p class="countdown-label">Selesaikan pembayaran dalam</p>
+                    <p class="countdown-value" id="countdown">15:00</p>
+                </div>
+
+                <!-- Status -->
+                <div class="status-box pending" id="statusBox">
+                    <div class="status-spinner"></div>
+                    <span>Menunggu pembayaran...</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="payment-actions">
+                    <button class="btn btn-outline" onclick="downloadQR()">
+                        <i class="fas fa-download"></i>
+                        Simpan QR
+                    </button>
+                    <a href="/" class="btn btn-primary">
+                        <i class="fas fa-times"></i>
+                        Batal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedProvider = 'atlantik';
+        let transactionData = null;
+        let countdownInterval;
+
+        // Get transaction data from session storage
+        function loadTransaction() {
+            const data = sessionStorage.getItem('pendingTransaction');
+            if (!data) {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                return;
+            }
+
+            transactionData = JSON.parse(data);
+            displayPayment();
+        }
+
+        function displayPayment() {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('paymentCard').style.display = 'block';
+
+            // Set QR code
+            document.getElementById('qrImage').src = transactionData.paymentDetails?.qr_image || '';
+
+            // Set details
+            document.getElementById('trxId').textContent = transactionData.internalTrxId;
+            document.getElementById('trxAmount').textContent = `Rp ${(transactionData.paymentDetails?.nominal || 0).toLocaleString('id-ID')}`;
+
+            // Start countdown
+            startCountdown(transactionData.paymentDetails?.expired_at);
+
+            // Start status check
+            checkStatus();
+            setInterval(checkStatus, 5000);
+        }
+
+        function selectProvider(provider) {
+            selectedProvider = provider;
+            document.querySelectorAll('.provider-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector(`[data-provider="${provider}"]`).classList.add('active');
+        }
+
+        function startCountdown(expiryTime) {
+            if (!expiryTime) return;
+
+            const expiry = new Date(expiryTime.replace(' ', 'T')).getTime();
+
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = expiry - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown').textContent = '00:00';
+                    document.getElementById('statusBox').innerHTML = '<i class="fas fa-times-circle"></i><span>Waktu habis</span>';
+                    document.getElementById('statusBox').className = 'status-box';
+                    document.getElementById('statusBox').style.background = 'rgba(239,68,68,0.1)';
+                    document.getElementById('statusBox').style.color = 'var(--danger)';
+                    return;
+                }
+
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById('countdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        async function checkStatus() {
+            if (!transactionData) return;
+
+            try {
+                const response = await fetch(`/api/check-payment?trxId=${transactionData.internalTrxId}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    if (result.status === 'success') {
+                        clearInterval(countdownInterval);
+                        document.getElementById('statusBox').innerHTML = '<i class="fas fa-check-circle"></i><span>Pembayaran berhasil!</span>';
+                        document.getElementById('statusBox').className = 'status-box success';
+                        
+                        // Redirect to status page
+                        setTimeout(() => {
+                            sessionStorage.setItem('pendingOrder', JSON.stringify({ orderId: result.transaction?.idOrder }));
+                            window.location.href = '/status';
+                        }, 2000);
+                    } else if (result.status === 'expired' || result.status === 'cancelled') {
+                        clearInterval(countdownInterval);
+                        document.getElementById('statusBox').innerHTML = '<i class="fas fa-times-circle"></i><span>Pembayaran gagal</span>';
+                        document.getElementById('statusBox').className = 'status-box';
+                        document.getElementById('statusBox').style.background = 'rgba(239,68,68,0.1)';
+                        document.getElementById('statusBox').style.color = 'var(--danger)';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking status:', error);
+            }
+        }
+
+        function downloadQR() {
+            const qrImage = document.getElementById('qrImage').src;
+            if (!qrImage) return;
+
+            const a = document.createElement('a');
+            a.href = qrImage;
+            a.download = `qris-${transactionData.internalTrxId}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTransaction();
+        });
+    </script>
+</body>
+</html>

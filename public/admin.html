@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Fathir Sthore Digital Office</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --primary-light: #333;
+            --accent: #d4a574;
+            --accent-hover: #c49464;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --text-muted: #999;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+            --bg-dark: #1a1a1a;
+            --border: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ffffff;
+            --primary-light: #e0e0e0;
+            --text: #ffffff;
+            --text-light: #b0b0b0;
+            --text-muted: #808080;
+            --bg: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --bg-dark: #000000;
+            --border: #333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            z-index: 1000;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .sidebar-logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .sidebar-logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            padding: 0 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(212,165,116,0.1);
+            color: var(--accent);
+        }
+
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-light);
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-icon.primary { background: rgba(212,165,116,0.1); color: var(--accent); }
+        .stat-icon.success { background: rgba(16,185,129,0.1); color: var(--success); }
+        .stat-icon.info { background: rgba(59,130,246,0.1); color: var(--info); }
+        .stat-icon.warning { background: rgba(245,158,11,0.1); color: var(--warning); }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .stat-trend.up { color: var(--success); }
+        .stat-trend.down { color: var(--danger); }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.875rem 1.25rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--accent);
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.75rem 1rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-file {
+            padding: 0.5rem;
+            background: var(--bg-light);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-file:hover {
+            border-color: var(--accent);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.875rem;
+            font-size: 0.8rem;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            background: var(--bg-light);
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245,158,11,0.1);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+
+        .badge-info {
+            background: rgba(59,130,246,0.1);
+            color: var(--info);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--border);
+            border-radius: 26px;
+            transition: var(--transition);
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--accent);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(24px);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-area {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading State */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-light) 25%, var(--border) 50%, var(--bg-light) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow: hidden;
+            animation: modalIn 0.3s ease-out;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-light);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            padding: 1rem 1.25rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            animation: toastIn 0.3s ease-out;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .toast-success .toast-icon { background: var(--success); color: white; }
+        .toast-error .toast-icon { background: var(--danger); color: white; }
+        .toast-warning .toast-icon { background: var(--warning); color: white; }
+
+        .toast-message {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/" class="sidebar-logo">
+                <div class="sidebar-logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <span class="sidebar-logo-text">Fathir Sthore</span>
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Menu Utama</div>
+                <button class="nav-item active" onclick="showTab('dashboard')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" onclick="showTab('produk')">
+                    <i class="fas fa-box"></i>
+                    <span>Produk</span>
+                </button>
+                <button class="nav-item" onclick="showTab('panel')">
+                    <i class="fas fa-server"></i>
+                    <span>Panel</span>
+                </button>
+                <button class="nav-item" onclick="showTab('transactions')">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Transaksi</span>
+                </button>
+                <button class="nav-item" onclick="showTab('withdrawal')">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Penarikan</span>
+                </button>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Pengaturan</div>
+                <button class="nav-item" onclick="showTab('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Pengaturan</span>
+                </button>
+                <a href="/mutasi" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Mutasi Detail</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div class="user-details">
+                    <div class="user-name">Admin</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            <div class="top-actions">
+                <button class="btn-icon" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Dashboard Tab -->
+            <div id="tab-dashboard" class="tab-content active">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="stat-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>12%</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalRevenue">Rp 0</div>
+                        <div class="stat-label">Total Pendapatan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>8%</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalOrders">0</div>
+                        <div class="stat-label">Total Pesanan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon info">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-trend up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>15%</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalVisits">0</div>
+                        <div class="stat-label">Kunjungan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-box"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalproduk">0</div>
+                        <div class="stat-label">Total Produk</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistik Kunjungan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="visitChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- produk Tab -->
+            <div id="tab-produk" class="tab-content">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchProductTab('digital')">Produk Digital</button>
+                    <button class="tab-btn" onclick="switchProductTab('script')">Script/File</button>
+                </div>
+
+                <!-- Digital produk -->
+                <div id="product-tab-digital" class="tab-content active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tambah Produk Digital</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="digitalProductForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Produk</label>
+                                    <input type="text" class="form-input" id="digitalName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Harga (Rp)</label>
+                                    <input type="number" class="form-input" id="digitalPrice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Stok</label>
+                                    <input type="number" class="form-input" id="digitalStock" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Diskon (%)</label>
+                                    <input type="number" class="form-input" id="digitalDiscount" value="0">
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label class="form-label">Deskripsi</label>
+                                    <textarea class="form-textarea" id="digitalDesc" rows="3"></textarea>
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
+                                        Tambah Produk
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script produk -->
+                <div id="product-tab-script" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Upload Script/File</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="scriptProductForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Produk</label>
+                                    <input type="text" class="form-input" id="scriptName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Harga (Rp)</label>
+                                    <input type="number" class="form-input" id="scriptPrice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Stok</label>
+                                    <input type="number" class="form-input" id="scriptStock" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Diskon (%)</label>
+                                    <input type="number" class="form-input" id="scriptDiscount" value="0">
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label class="form-label">File (ZIP/RAR)</label>
+                                    <input type="file" class="form-file" id="scriptFile" accept=".zip,.rar,.7z" required>
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label class="form-label">Deskripsi</label>
+                                    <textarea class="form-textarea" id="scriptDesc" rows="3"></textarea>
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-upload"></i>
+                                        Upload Script
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Produk</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Tipe</th>
+                                        <th>Harga</th>
+                                        <th>Stok</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Memuat data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Tab -->
+            <div id="tab-panel" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Produk Panel</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="panelProductForm" class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nama Paket</label>
+                                <input type="text" class="form-input" id="panelName" placeholder="Panel 2GB" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Harga (Rp)</label>
+                                <input type="number" class="form-input" id="panelPrice" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">RAM (GB)</label>
+                                <input type="number" class="form-input" id="panelRam" value="2" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CPU (%)</label>
+                                <input type="number" class="form-input" id="panelCpu" value="60" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Disk (GB)</label>
+                                <input type="number" class="form-input" id="panelDisk" value="2" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" id="panelStatus">
+                                    <option value="true">Aktif</option>
+                                    <option value="false">Nonaktif</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label class="form-label">Deskripsi</label>
+                                <textarea class="form-textarea" id="panelDesc" rows="3" placeholder="Spesifikasi panel..."></textarea>
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-server"></i>
+                                    Tambah Panel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Panel produk List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Produk Panel</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>RAM</th>
+                                        <th>CPU</th>
+                                        <th>Disk</th>
+                                        <th>Harga</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="panelTableBody">
+                                    <tr>
+                                        <td colspan="7" class="text-center">Memuat data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="tab-transactions" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Transaksi</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Transaksi</th>
+                                        <th>Tanggal</th>
+                                        <th>Produk</th>
+                                        <th>Nominal</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Memuat data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Withdrawal Tab -->
+            <div id="tab-withdrawal" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Permintaan Penarikan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Jumlah</th>
+                                        <th>Bank/E-Wallet</th>
+                                        <th>No. Rekening</th>
+                                        <th>Atas Nama</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="withdrawalTableBody">
+                                    <tr>
+                                        <td colspan="7" class="text-center">Memuat data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Pengaturan Payment Gateway</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="paymentSettingsForm" class="form-grid">
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <h4 style="margin-bottom: 1rem; color: var(--accent);">QRIS A - Atlantik</h4>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">API Key Atlantik</label>
+                                <input type="text" class="form-input" id="atlantikApiKey" placeholder="Masukkan API Key">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Base URL</label>
+                                <input type="text" class="form-input" id="atlantikBaseURL" value="https://atlantik.top/api">
+                            </div>
+                            
+                            <div class="form-group" style="grid-column: 1 / -1; margin-top: 1rem;">
+                                <h4 style="margin-bottom: 1rem; color: var(--accent);">QRIS B - Pakasir</h4>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">API Key Pakasir</label>
+                                <input type="text" class="form-input" id="pakasirApiKey" placeholder="Masukkan API Key">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Base URL</label>
+                                <input type="text" class="form-input" id="pakasirBaseURL" value="https://pakasir.com/api">
+                            </div>
+
+                            <div class="form-group" style="grid-column: 1 / -1; margin-top: 1rem;">
+                                <h4 style="margin-bottom: 1rem; color: var(--accent);">Panel Pterodactyl</h4>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">PLTA (API Key)</label>
+                                <input type="text" class="form-input" id="panelPlta" placeholder="Masukkan PLTA">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Domain Panel</label>
+                                <input type="text" class="form-input" id="panelDomain" placeholder="https://panel.example.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location ID</label>
+                                <input type="text" class="form-input" id="panelLoc" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Egg ID</label>
+                                <input type="text" class="form-input" id="panelEgg" value="1">
+                            </div>
+
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Simpan Pengaturan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Tab Navigation
+        function showTab(tabName) {
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+
+            // Update page title
+            const titles = {
+                dashboard: 'Dashboard',
+                produk: 'Kelola Produk',
+                panel: 'Kelola Panel',
+                transactions: 'Daftar Transaksi',
+                withdrawal: 'Penarikan Saldo',
+                settings: 'Pengaturan'
+            };
+            document.getElementById('pageTitle').textContent = titles[tabName];
+
+            // Show tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // Load data based on tab
+            if (tabName === 'dashboard') loadDashboardData();
+            if (tabName === 'produk') loadproduk();
+            if (tabName === 'panel') loadPanelproduk();
+            if (tabName === 'transactions') loadTransactions();
+            if (tabName === 'withdrawal') loadWithdrawals();
+            if (tabName === 'settings') loadSettings();
+        }
+
+        // Product Tab Switch
+        function switchProductTab(tabName) {
+            document.querySelectorAll('#tab-produk .tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.querySelectorAll('#tab-produk > .tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`product-tab-${tabName}`).classList.add('active');
+        }
+
+        // Toast Function
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'exclamation'}"></i>
+                </div>
+                <span class="toast-message">${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        // Load Dashboard Data
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/statistics');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    document.getElementById('totalRevenue').textContent = `Rp ${(data.revenue.monthly || 0).toLocaleString('id-ID')}`;
+                    document.getElementById('totalVisits').textContent = (data.visits.monthly || data.visits.total || 0).toLocaleString('id-ID');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+
+            // Load produk count
+            try {
+                const response = await fetch('/api/produk');
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('totalproduk').textContent = result.data.length;
+                }
+            } catch (error) {
+                console.error('Error loading produk count:', error);
+            }
+
+            // Load transactions count
+            try {
+                const response = await fetch('/api/mutasi');
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('totalOrders').textContent = result.data.length;
+                }
+            } catch (error) {
+                console.error('Error loading transactions count:', error);
+            }
+        }
+
+        // Load produk
+        async function loadproduk() {
+            try {
+                const response = await fetch('/api/produk');
+                const result = await response.json();
+                
+                const tbody = document.getElementById('productTableBody');
+                if (result.success && result.data.length > 0) {
+                    tbody.innerHTML = result.data.map(product => `
+                        <tr>
+                            <td>${product.nama}</td>
+                            <td><span class="badge badge-info">${product.type || 'digital'}</span></td>
+                            <td>Rp ${product.price?.toLocaleString('id-ID') || 0}</td>
+                            <td>${product.stock || 0}</td>
+                            <td>
+                                <span class="badge ${product.isActive !== false ? 'badge-success' : 'badge-danger'}">
+                                    ${product.isActive !== false ? 'Aktif' : 'Nonaktif'}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product._id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">Tidak ada produk</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading produk:', error);
+            }
+        }
+
+        // Load Panel produk
+        async function loadPanelproduk() {
+            try {
+                const response = await fetch('/api/panel-produk/all');
+                const result = await response.json();
+                
+                const tbody = document.getElementById('panelTableBody');
+                if (result.success && result.data.length > 0) {
+                    tbody.innerHTML = result.data.map(product => `
+                        <tr>
+                            <td>${product.nama}</td>
+                            <td>${product.ram} GB</td>
+                            <td>${product.cpu}%</td>
+                            <td>${product.disk} GB</td>
+                            <td>Rp ${product.price?.toLocaleString('id-ID') || 0}</td>
+                            <td>
+                                <span class="badge ${product.panelEnabled ? 'badge-success' : 'badge-danger'}">
+                                    ${product.panelEnabled ? 'Aktif' : 'Nonaktif'}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deletePanelProduct('${product._id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tidak ada produk panel</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading panel produk:', error);
+            }
+        }
+
+        // Load Transactions
+        async function loadTransactions() {
+            try {
+                const response = await fetch('/api/mutasi');
+                const result = await response.json();
+                
+                const tbody = document.getElementById('transactionTableBody');
+                if (result.success && result.data.length > 0) {
+                    tbody.innerHTML = result.data.slice(0, 20).map(trx => `
+                        <tr>
+                            <td>${trx.internalTrxId}</td>
+                            <td>${new Date(trx.tanggal).toLocaleDateString('id-ID')}</td>
+                            <td>${trx.productCode || '-'}</td>
+                            <td>Rp ${trx.nominalDeposit?.toLocaleString('id-ID') || 0}</td>
+                            <td>
+                                <span class="badge ${trx.statusOrder === 'success' ? 'badge-success' : trx.statusOrder === 'failed' ? 'badge-danger' : 'badge-warning'}">
+                                    ${trx.statusOrder || 'pending'}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/receipt?trxId=${trx.internalTrxId}" class="btn btn-outline btn-sm" target="_blank">
+                                    <i class="fas fa-receipt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">Tidak ada transaksi</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+            }
+        }
+
+        // Load Withdrawals
+        async function loadWithdrawals() {
+            try {
+                const response = await fetch('/api/withdrawal');
+                const result = await response.json();
+                
+                const tbody = document.getElementById('withdrawalTableBody');
+                if (result.success && result.data.length > 0) {
+                    tbody.innerHTML = result.data.map(wd => `
+                        <tr>
+                            <td>${new Date(wd.tanggal).toLocaleDateString('id-ID')}</td>
+                            <td>Rp ${wd.amount?.toLocaleString('id-ID') || 0}</td>
+                            <td>${wd.bankName}</td>
+                            <td>${wd.accountNumber}</td>
+                            <td>${wd.accountName}</td>
+                            <td>
+                                <span class="badge ${wd.status === 'success' ? 'badge-success' : wd.status === 'failed' ? 'badge-danger' : 'badge-warning'}">
+                                    ${wd.status}
+                                </span>
+                            </td>
+                            <td>
+                                ${wd.status === 'pending' ? `
+                                    <button class="btn btn-success btn-sm" onclick="updateWithdrawal('${wd._id}', 'success')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="updateWithdrawal('${wd._id}', 'failed')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                ` : '-'}
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tidak ada permintaan penarikan</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading withdrawals:', error);
+            }
+        }
+
+        // Load Settings
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/settings');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    document.getElementById('atlantikApiKey').value = data.atlantikApiKey || '';
+                    document.getElementById('atlantikBaseURL').value = data.atlantikBaseURL || 'https://atlantik.top/api';
+                    document.getElementById('pakasirApiKey').value = data.pakasirApiKey || '';
+                    document.getElementById('pakasirBaseURL').value = data.pakasirBaseURL || 'https://pakasir.com/api';
+                    document.getElementById('panelPlta').value = data.plta || '';
+                    document.getElementById('panelDomain').value = data.panelDomain || '';
+                    document.getElementById('panelLoc').value = data.panelLoc || '1';
+                    document.getElementById('panelEgg').value = data.panelEgg || '1';
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        // Form Submissions
+        document.getElementById('digitalProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                nama: document.getElementById('digitalName').value,
+                price: parseInt(document.getElementById('digitalPrice').value),
+                stock: parseInt(document.getElementById('digitalStock').value),
+                discount: parseInt(document.getElementById('digitalDiscount').value),
+                deks: document.getElementById('digitalDesc').value,
+                type: 'digital'
+            };
+
+            try {
+                const response = await fetch('/api/produk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Produk berhasil ditambahkan');
+                    e.target.reset();
+                    loadproduk();
+                } else {
+                    showToast(result.message || 'Gagal menambahkan produk', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        });
+
+        document.getElementById('scriptProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('nama', document.getElementById('scriptName').value);
+            formData.append('price', document.getElementById('scriptPrice').value);
+            formData.append('stock', document.getElementById('scriptStock').value);
+            formData.append('discount', document.getElementById('scriptDiscount').value);
+            formData.append('description', document.getElementById('scriptDesc').value);
+            formData.append('file', document.getElementById('scriptFile').files[0]);
+
+            try {
+                const response = await fetch('/api/produk/script', {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Script berhasil diupload');
+                    e.target.reset();
+                    loadproduk();
+                } else {
+                    showToast(result.message || 'Gagal upload script', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        });
+
+        document.getElementById('panelProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                nama: document.getElementById('panelName').value,
+                price: parseInt(document.getElementById('panelPrice').value),
+                ram: parseInt(document.getElementById('panelRam').value),
+                cpu: parseInt(document.getElementById('panelCpu').value),
+                disk: parseInt(document.getElementById('panelDisk').value),
+                description: document.getElementById('panelDesc').value,
+                panelEnabled: document.getElementById('panelStatus').value === 'true'
+            };
+
+            try {
+                const response = await fetch('/api/panel-produk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Produk panel berhasil ditambahkan');
+                    e.target.reset();
+                    loadPanelproduk();
+                } else {
+                    showToast(result.message || 'Gagal menambahkan panel', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        });
+
+        document.getElementById('paymentSettingsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const settings = [
+                { key: 'atlantikApiKey', value: document.getElementById('atlantikApiKey').value },
+                { key: 'atlantikBaseURL', value: document.getElementById('atlantikBaseURL').value },
+                { key: 'pakasirApiKey', value: document.getElementById('pakasirApiKey').value },
+                { key: 'pakasirBaseURL', value: document.getElementById('pakasirBaseURL').value },
+                { key: 'plta', value: document.getElementById('panelPlta').value },
+                { key: 'panelDomain', value: document.getElementById('panelDomain').value },
+                { key: 'panelLoc', value: document.getElementById('panelLoc').value },
+                { key: 'panelEgg', value: document.getElementById('panelEgg').value }
+            ];
+
+            try {
+                for (const setting of settings) {
+                    await fetch('/api/settings', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify(setting)
+                    });
+                }
+                showToast('Pengaturan berhasil disimpan');
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        });
+
+        // Delete Functions
+        async function deleteProduct(id) {
+            if (!confirm('Yakin ingin menghapus produk ini?')) return;
+            
+            try {
+                const response = await fetch(`/api/produk/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Produk berhasil dihapus');
+                    loadproduk();
+                } else {
+                    showToast(result.message || 'Gagal menghapus produk', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+
+        async function deletePanelProduct(id) {
+            if (!confirm('Yakin ingin menghapus produk panel ini?')) return;
+            
+            try {
+                const response = await fetch(`/api/panel-produk/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Produk panel berhasil dihapus');
+                    loadPanelproduk();
+                } else {
+                    showToast(result.message || 'Gagal menghapus produk', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+
+        async function updateWithdrawal(id, status) {
+            try {
+                const response = await fetch(`/api/withdrawal/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ status })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast(`Penarikan ${status === 'success' ? 'disetujui' : 'ditolak'}`);
+                    loadWithdrawals();
+                } else {
+                    showToast('Gagal update status', 'error');
+                }
+            } catch (error) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                const response = await fetch('/logout');
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                showToast('Gagal logout', 'error');
+            }
+        }
+
+        // Initialize Chart
+        let visitChart;
+        function initChart() {
+            const ctx = document.getElementById('visitChart').getContext('2d');
+            visitChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+                    datasets: [{
+                        label: 'Kunjungan',
+                        data: [65, 78, 90, 81, 96, 105, 120],
+                        borderColor: '#d4a574',
+                        backgroundColor: 'rgba(212,165,116,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+            initChart();
+        });
+    </script>
+</body>
+</html>

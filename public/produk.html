@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk - Fathir Sthore Digital Office</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --primary-light: #333;
+            --accent: #d4a574;
+            --accent-hover: #c49464;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --text-muted: #999;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+            --bg-dark: #1a1a1a;
+            --border: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+            --radius-lg: 20px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ffffff;
+            --primary-light: #e0e0e0;
+            --text: #ffffff;
+            --text-light: #b0b0b0;
+            --text-muted: #808080;
+            --bg: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --bg-dark: #000000;
+            --border: #333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(10,10,10,0.95);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--bg-light), var(--bg));
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .page-desc {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* produk Section */
+        .produk-section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        /* produk Grid */
+        .produk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-image {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, var(--bg-light), var(--border));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+        }
+
+        .product-badge.discount {
+            background: #ef4444;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .product-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-current {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .price-original {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .btn-buy {
+            padding: 0.625rem 1.25rem;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-buy:hover {
+            background: var(--accent);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: var(--text-muted);
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-desc {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .footer-logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .footer-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .produk-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-light) 25%, var(--border) 50%, var(--bg-light) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <span class="logo-text">Fathir Sthore</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="/" class="nav-link">Beranda</a>
+                <a href="/produk" class="nav-link active">Produk</a>
+                <a href="/panel" class="nav-link">Panel</a>
+                <a href="/panduan" class="nav-link">Panduan</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="btn-icon" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1 class="page-title">Produk Digital</h1>
+            <p class="page-desc">
+                Jelajahi koleksi produk digital berkualitas kami, mulai dari script, template, hingga tools profesional
+            </p>
+        </section>
+
+        <!-- produk Section -->
+        <section class="produk-section">
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="digital">Digital</button>
+                <button class="filter-btn" data-filter="script">Script/File</button>
+            </div>
+
+            <!-- produk Grid -->
+            <div class="produk-grid" id="produkGrid">
+                <!-- Loading State -->
+                <div class="product-card">
+                    <div class="product-image skeleton" style="height: 200px;"></div>
+                    <div class="product-content">
+                        <div class="skeleton" style="width: 80px; height: 16px; margin-bottom: 0.5rem;"></div>
+                        <div class="skeleton" style="width: 100%; height: 24px; margin-bottom: 0.75rem;"></div>
+                        <div class="skeleton" style="width: 80%; height: 40px; margin-bottom: 1rem;"></div>
+                        <div class="skeleton" style="width: 100px; height: 20px;"></div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image skeleton" style="height: 200px;"></div>
+                    <div class="product-content">
+                        <div class="skeleton" style="width: 80px; height: 16px; margin-bottom: 0.5rem;"></div>
+                        <div class="skeleton" style="width: 100%; height: 24px; margin-bottom: 0.75rem;"></div>
+                        <div class="skeleton" style="width: 80%; height: 40px; margin-bottom: 1rem;"></div>
+                        <div class="skeleton" style="width: 100px; height: 20px;"></div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image skeleton" style="height: 200px;"></div>
+                    <div class="product-content">
+                        <div class="skeleton" style="width: 80px; height: 16px; margin-bottom: 0.5rem;"></div>
+                        <div class="skeleton" style="width: 100%; height: 24px; margin-bottom: 0.75rem;"></div>
+                        <div class="skeleton" style="width: 80%; height: 40px; margin-bottom: 1rem;"></div>
+                        <div class="skeleton" style="width: 100px; height: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <span class="footer-logo-text">Fathir Sthore</span>
+                    </a>
+                    <p class="footer-desc">
+                        Digital Office terpercaya yang menyediakan berbagai produk digital, 
+                        panel server, dan layanan profesional untuk bisnis online Anda.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/62882003493812" class="social-link" target="_blank" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://t.me/fathirsthore" class="social-link" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        <a href="mailto:fathirsthore@yahoo.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Menu</h4>
+                    <ul class="footer-links">
+                        <li><a href="/"><i class="fas fa-chevron-right"></i> Beranda</a></li>
+                        <li><a href="/produk"><i class="fas fa-chevron-right"></i> Produk</a></li>
+                        <li><a href="/panel"><i class="fas fa-chevron-right"></i> Panel</a></li>
+                        <li><a href="/panduan"><i class="fas fa-chevron-right"></i> Panduan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Layanan</h4>
+                    <ul class="footer-links">
+                        <li><a href="/produk"><i class="fas fa-chevron-right"></i> Produk Digital</a></li>
+                        <li><a href="/panel"><i class="fas fa-chevron-right"></i> Panel Server</a></li>
+                        <li><a href="/panduan"><i class="fas fa-chevron-right"></i> Panduan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Kontak</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:fathirsthore@yahoo.com"><i class="fas fa-envelope"></i> fathirsthore@yahoo.com</a></li>
+                        <li><a href="https://wa.me/62882003493812" target="_blank"><i class="fas fa-phone"></i> +62 882-0034-93812</a></li>
+                        <li><a href="https://t.me/fathirsthore" target="_blank"><i class="fab fa-telegram"></i> @fathirsthore</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2025 Fathir Sthore Digital Office. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Load produk
+        let allproduk = [];
+
+        async function loadproduk() {
+            try {
+                const response = await fetch('/api/produk');
+                const result = await response.json();
+                
+                if (result.success) {
+                    allproduk = result.data;
+                    displayproduk(allproduk);
+                }
+            } catch (error) {
+                console.error('Error loading produk:', error);
+                document.getElementById('produkGrid').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3 class="empty-title">Gagal Memuat Produk</h3>
+                        <p class="empty-desc">Silakan refresh halaman atau coba lagi nanti</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayproduk(produk) {
+            const grid = document.getElementById('produkGrid');
+            
+            if (produk.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3 class="empty-title">Belum Ada Produk</h3>
+                        <p class="empty-desc">Produk akan segera tersedia</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = produk.map(product => {
+                const finalPrice = product.price - (product.price * product.discount / 100);
+                return `
+                    <div class="product-card" data-type="${product.type || 'digital'}">
+                        <div class="product-image">
+                            <img src="${product.imageurl || `https://placehold.co/600x400/d4a574/ffffff?text=${encodeURIComponent(product.nama)}`}" 
+                                 alt="${product.nama}" loading="lazy">
+                            ${product.discount > 0 ? `<span class="product-badge discount">-${product.discount}%</span>` : ''}
+                        </div>
+                        <div class="product-content">
+                            <div class="product-category">${product.type === 'script' ? 'Script/File' : 'Produk Digital'}</div>
+                            <h3 class="product-title">${product.nama}</h3>
+                            <p class="product-desc">${product.deks || 'Produk digital berkualitas dari Fathir Sthore'}</p>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="price-current">Rp ${finalPrice.toLocaleString('id-ID')}</span>
+                                    ${product.discount > 0 ? `<span class="price-original">Rp ${product.price.toLocaleString('id-ID')}</span>` : ''}
+                                </div>
+                                <button class="btn-buy" onclick="buyProduct('${product._id}')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Beli
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter produk
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                if (filter === 'all') {
+                    displayproduk(allproduk);
+                } else {
+                    const filtered = allproduk.filter(p => p.type === filter);
+                    displayproduk(filtered);
+                }
+            });
+        });
+
+        // Buy Product
+        function buyProduct(productId) {
+            // Redirect to payment or show modal
+            alert('Fitur pembelian akan segera tersedia. Silakan hubungi kami via WhatsApp.');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadproduk();
+        });
+    </script>
+</body>
+</html>

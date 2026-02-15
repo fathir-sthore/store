@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan - Fathir Sthore Digital Office</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4a574;
+            --accent-hover: #c49464;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --text-muted: #999;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+            --border: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;
+            --radius-lg: 20px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ffffff;
+            --text: #ffffff;
+            --text-light: #b0b0b0;
+            --text-muted: #808080;
+            --bg: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --border: #333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(10,10,10,0.95);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--bg-light), var(--bg));
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .page-desc {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Guide Section */
+        .guide-section {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .guide-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .guide-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .guide-header {
+            padding: 1.5rem 2rem;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .guide-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(212,165,116,0.1), rgba(212,165,116,0.2));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        .guide-title {
+            flex: 1;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .guide-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .guide-card.active .guide-toggle {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .guide-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .guide-card.active .guide-content {
+            max-height: 1000px;
+        }
+
+        .guide-body {
+            padding: 2rem;
+        }
+
+        .guide-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .step-note {
+            background: rgba(212,165,116,0.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .step-note i {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-light);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-desc {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-contact {
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128c7e;
+            transform: translateY(-2px);
+        }
+
+        .btn-telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .btn-telegram:hover {
+            background: #006699;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .footer-logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .footer-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .guide-step {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+
+            .btn-contact {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <span class="logo-text">Fathir Sthore</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="/" class="nav-link">Beranda</a>
+                <a href="/produk" class="nav-link">Produk</a>
+                <a href="/panel" class="nav-link">Panel</a>
+                <a href="/panduan" class="nav-link active">Panduan</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="btn-icon" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1 class="page-title">Panduan Penggunaan</h1>
+            <p class="page-desc">
+                Pelajari cara menggunakan layanan kami dengan panduan lengkap berikut
+            </p>
+        </section>
+
+        <!-- Guide Section -->
+        <section class="guide-section">
+            <!-- Cara Pembelian -->
+            <div class="guide-card active">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="guide-title">Cara Melakukan Pembelian</h3>
+                    <div class="guide-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="guide-content">
+                    <div class="guide-body">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Pilih Produk</h4>
+                                <p class="step-desc">
+                                    Kunjungi halaman Produk atau Panel untuk melihat daftar produk yang tersedia. 
+                                    Pilih produk yang sesuai dengan kebutuhan Anda.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Hubungi Admin</h4>
+                                <p class="step-desc">
+                                    Hubungi kami melalui WhatsApp atau Telegram untuk melakukan pemesanan. 
+                                    Sertakan nama produk yang ingin dibeli.
+                                </p>
+                                <div class="step-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    WhatsApp: +62882003493812 | Telegram: t.me/fathirsthore
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Lakukan Pembayaran</h4>
+                                <p class="step-desc">
+                                    Admin akan mengirimkan invoice dan nomor rekening/e-wallet untuk pembayaran. 
+                                    Kami menerima pembayaran via QRIS, Transfer Bank, dan E-Wallet.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Terima Produk</h4>
+                                <p class="step-desc">
+                                    Setelah pembayaran dikonfirmasi, produk akan segera dikirimkan ke Anda. 
+                                    Untuk panel, data login akan dikirimkan dalam format teks.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cara Membuat Panel -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="guide-title">Cara Membuat Panel Server</h3>
+                    <div class="guide-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="guide-content">
+                    <div class="guide-body">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Pilih Paket Panel</h4>
+                                <p class="step-desc">
+                                    Kunjungi halaman Panel dan pilih paket yang sesuai dengan kebutuhan Anda. 
+                                    Kami menyediakan berbagai pilihan RAM mulai dari 1GB hingga 8GB.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Isi Form Pembuatan</h4>
+                                <p class="step-desc">
+                                    Masukkan username yang diinginkan dan pilih paket panel. 
+                                    Username hanya boleh mengandung huruf dan angka.
+                                </p>
+                                <div class="step-note">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Pastikan username belum pernah digunakan di panel kami.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Lakukan Pembayaran</h4>
+                                <p class="step-desc">
+                                    Hubungi admin untuk melakukan pembayaran. Setelah pembayaran dikonfirmasi, 
+                                    panel akan dibuat secara otomatis.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Akses Panel Anda</h4>
+                                <p class="step-desc">
+                                    Data login akan dikirimkan oleh admin. Anda dapat menyalin atau mendownload 
+                                    data tersebut untuk disimpan dengan aman.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cara Download Script -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="guide-title">Cara Download Produk Digital</h3>
+                    <div class="guide-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="guide-content">
+                    <div class="guide-body">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Pilih Produk</h4>
+                                <p class="step-desc">
+                                    Kunjungi halaman Produk dan pilih kategori "Script/File". 
+                                    Lihat deskripsi dan detail produk sebelum membeli.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Lakukan Pembelian</h4>
+                                <p class="step-desc">
+                                    Hubungi admin untuk melakukan pembelian produk yang diinginkan.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Download File</h4>
+                                <p class="step-desc">
+                                    Setelah pembayaran dikonfirmasi, admin akan mengirimkan link download 
+                                    atau file langsung melalui chat.
+                                </p>
+                                <div class="step-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    Pastikan untuk mendownload file segera karena link memiliki batas waktu.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="guide-title">Pertanyaan Umum (FAQ)</h3>
+                    <div class="guide-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="guide-content">
+                    <div class="guide-body">
+                        <div class="guide-step">
+                            <div class="step-number">Q</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Berapa lama proses aktifasi panel?</h4>
+                                <p class="step-desc">
+                                    Panel akan aktif dalam waktu 1-5 menit setelah pembayaran dikonfirmasi.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">Q</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Apakah ada garansi?</h4>
+                                <p class="step-desc">
+                                    Ya, kami menyediakan garansi untuk panel selama 7 hari. 
+                                    Jika terjadi masalah, silakan hubungi support kami.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">Q</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Metode pembayaran apa saja yang diterima?</h4>
+                                <p class="step-desc">
+                                    Kami menerima pembayaran via QRIS, Transfer Bank (BCA, BRI, Mandiri), 
+                                    dan E-Wallet (DANA, OVO, GoPay, ShopeePay).
+                                </p>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">Q</div>
+                            <div class="step-content">
+                                <h4 class="step-title">Bagaimana cara menghubungi support?</h4>
+                                <p class="step-desc">
+                                    Anda dapat menghubungi kami melalui WhatsApp (+62882003493812) 
+                                    atau Telegram (t.me/fathirsthore) 24/7.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="contact-container">
+                <h2 class="contact-title">Masih Membutuhkan Bantuan?</h2>
+                <p class="contact-desc">
+                    Tim support kami siap membantu Anda. Hubungi kami melalui:
+                </p>
+                <div class="contact-buttons">
+                    <a href="https://wa.me/62882003493812" class="btn-contact btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="https://t.me/fathirsthore" class="btn-contact btn-telegram" target="_blank">
+                        <i class="fab fa-telegram-plane"></i>
+                        Telegram
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <span class="footer-logo-text">Fathir Sthore</span>
+                    </a>
+                    <p class="footer-desc">
+                        Digital Office terpercaya yang menyediakan berbagai produk digital, 
+                        panel server, dan layanan profesional untuk bisnis online Anda.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/62882003493812" class="social-link" target="_blank" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://t.me/fathirsthore" class="social-link" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        <a href="mailto:fathirsthore@yahoo.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Menu</h4>
+                    <ul class="footer-links">
+                        <li><a href="/"><i class="fas fa-chevron-right"></i> Beranda</a></li>
+                        <li><a href="/produk"><i class="fas fa-chevron-right"></i> Produk</a></li>
+                        <li><a href="/panel"><i class="fas fa-chevron-right"></i> Panel</a></li>
+                        <li><a href="/panduan"><i class="fas fa-chevron-right"></i> Panduan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Layanan</h4>
+                    <ul class="footer-links">
+                        <li><a href="/produk"><i class="fas fa-chevron-right"></i> Produk Digital</a></li>
+                        <li><a href="/panel"><i class="fas fa-chevron-right"></i> Panel Server</a></li>
+                        <li><a href="/panduan"><i class="fas fa-chevron-right"></i> Panduan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Kontak</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:fathirsthore@yahoo.com"><i class="fas fa-envelope"></i> fathirsthore@yahoo.com</a></li>
+                        <li><a href="https://wa.me/62882003493812" target="_blank"><i class="fas fa-phone"></i> +62 882-0034-93812</a></li>
+                        <li><a href="https://t.me/fathirsthore" target="_blank"><i class="fab fa-telegram"></i> @fathirsthore</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2025 Fathir Sthore Digital Office. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Toggle Guide
+        function toggleGuide(header) {
+            const card = header.parentElement;
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
